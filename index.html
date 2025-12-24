@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI_1 - Design Versions Demo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        .version-summary {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            margin-bottom: 30px;
+        }
+
+        .version-summary h2 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .version-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .version-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            border: 2px solid #e9ecef;
+        }
+
+        .version-card h3 {
+            font-size: 16px;
+            color: #6778ED;
+            margin-bottom: 10px;
+        }
+
+        .version-card .version-badge {
+            display: inline-block;
+            background: #6778ED;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .version-card p {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 6px;
+        }
+
+        .version-card ul {
+            font-size: 12px;
+            color: #666;
+            padding-left: 18px;
+        }
+
+        .version-card ul li {
+            margin-bottom: 3px;
+        }
+
+        .version-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            background: white;
+            padding: 10px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            flex-wrap: wrap;
+        }
+
+        .version-tab {
+            flex: 1;
+            min-width: 200px;
+            padding: 12px 20px;
+            background: #f8f9fa;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            color: #666;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .version-tab:hover {
+            background: #e9ecef;
+        }
+
+        .version-tab.active {
+            background: #6778ED;
+            color: white;
+            border-color: #6778ED;
+        }
+
+        .demo-content {
+            display: none;
+        }
+
+        .demo-content.active {
+            display: block;
+        }
+
+        .demo-section {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .demo-section h2 {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        /* Version 1 Styles */
+        .attachments-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .attachment-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px;
+            background-color: #ffffff;
+            border: 1px solid #6778ED;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            transition: all 0.2s ease;
+        }
+
+        .attachment-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(103, 120, 237, 0.2);
+        }
+
+        .attachment-title {
+            flex: 1;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 120%;
+            color: #6274A0;
+        }
+
+        /* Mobile App Styles (V2 & V3) */
+        .mobile-app {
+            width: 376px;
+            min-height: 600px;
+            background-color: #FFFFFF;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            margin: 0 auto;
+        }
+
+        .mobile-nav {
+            background-color: #FFFFFF;
+            padding: 16px;
+        }
+
+        .mobile-nav-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .nav-btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            background: transparent;
+        }
+
+        .nav-btn.menu {
+            border-radius: 50%;
+            background: #EEF0F7;
+        }
+
+        .nav-title-section {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .nav-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 120%;
+            color: #465C88;
+        }
+
+        .mobile-content {
+            padding: 24px 16px;
+        }
+
+        /* Version 3 Specific */
+        .feedback-section {
+            background: #F5F7FD;
+            padding: 16px;
+            border-radius: 16px;
+        }
+
+        .question-text {
+            text-align: center;
+            margin-bottom: 16px;
+            font-size: 16px;
+            color: #6274A0;
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .btn-yes {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 16px 24px;
+            background: #FFFFFF;
+            border: 1px solid #03C5B8;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            color: #03C5B8;
+            transition: all 0.2s ease;
+        }
+
+        .btn-yes:hover {
+            background: #03C5B8;
+            color: white;
+        }
+
+        .btn-no {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 24px;
+            background: #FFFFFF;
+            border: 1px solid #E9ECEF;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            color: #6274A0;
+            transition: all 0.2s ease;
+        }
+
+        .btn-no:hover {
+            background: #F5F7FD;
+        }
+
+        svg {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>AI_1 Project</h1>
+            <p>Figma Design Implementation Showcase</p>
+        </div>
+
+        <!-- Version Summary -->
+        <div class="version-summary">
+            <h2>Version Summary</h2>
+            <div class="version-grid">
+                <div class="version-card">
+                    <span class="version-badge">Version 1</span>
+                    <h3>Attachment Card</h3>
+                    <p><strong>Source:</strong> Node 1:186</p>
+                    <p><strong>Type:</strong> Component</p>
+                    <ul>
+                        <li>White bg, blue border</li>
+                        <li>Document icon + text + chevron</li>
+                        <li>Interactive hover states</li>
+                    </ul>
+                </div>
+                <div class="version-card">
+                    <span class="version-badge">Version 2</span>
+                    <h3>Mobile Nav Header</h3>
+                    <p><strong>Source:</strong> Node 1:84</p>
+                    <p><strong>Type:</strong> Navigation</p>
+                    <ul>
+                        <li>Back + title + menu buttons</li>
+                        <li>Verified badge icon</li>
+                        <li>Mobile-first (376px)</li>
+                    </ul>
+                </div>
+                <div class="version-card">
+                    <span class="version-badge">Version 3</span>
+                    <h3>Complete Mobile Page</h3>
+                    <p><strong>Source:</strong> Node 1:84 (Full)</p>
+                    <p><strong>Type:</strong> Full Page</p>
+                    <ul>
+                        <li>Navigation + content area</li>
+                        <li>Feedback question section</li>
+                        <li>Yes/No action buttons</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Version Tabs -->
+        <div class="version-tabs">
+            <button class="version-tab active" onclick="showVersion(1)">V1: Attachment Card</button>
+            <button class="version-tab" onclick="showVersion(2)">V2: Mobile Nav</button>
+            <button class="version-tab" onclick="showVersion(3)">V3: Full Mobile Page</button>
+        </div>
+
+        <!-- Version 1 Content -->
+        <div id="version-1" class="demo-content active">
+            <div class="demo-section">
+                <h2>Version 1: Attachment Cards</h2>
+                <div class="attachments-list">
+                    <button class="attachment-card" onclick="handleAttachmentClick('Devis chaudière pour mme Ramondin')">
+                        <div style="flex-shrink: 0;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="#6778ED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M14 2V8H20" stroke="#6778ED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M16 13H8" stroke="#6778ED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M16 17H8" stroke="#6778ED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M10 9H9H8" stroke="#6778ED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <span class="attachment-title">Devis chaudière pour mme Ramondin</span>
+                        <div style="flex-shrink: 0;">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M6 12L10 8L6 4" stroke="#6778ED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                    </button>
+
+                    <button class="attachment-card" onclick="handleAttachmentClick('Facture réparation chauffage')">
+                        <div style="flex-shrink: 0;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="#6778ED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M14 2V8H20" stroke="#6778ED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M16 13H8" stroke="#6778ED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M16 17H8" stroke="#6778ED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M10 9H9H8" stroke="#6778ED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <span class="attachment-title">Facture réparation chauffage</span>
+                        <div style="flex-shrink: 0;">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M6 12L10 8L6 4" stroke="#6778ED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                    </button>
+
+                    <button class="attachment-card" onclick="handleAttachmentClick('Contrat maintenance annuelle')">
+                        <div style="flex-shrink: 0;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="#6778ED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M14 2V8H20" stroke="#6778ED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M16 13H8" stroke="#6778ED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M16 17H8" stroke="#6778ED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M10 9H9H8" stroke="#6778ED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <span class="attachment-title">Contrat maintenance annuelle</span>
+                        <div style="flex-shrink: 0;">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M6 12L10 8L6 4" stroke="#6778ED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Version 2 Content -->
+        <div id="version-2" class="demo-content">
+            <div class="demo-section">
+                <h2>Version 2: Mobile App Navigation</h2>
+                <div class="mobile-app">
+                    <nav class="mobile-nav">
+                        <div class="mobile-nav-content">
+                            <button class="nav-btn" onclick="handleNavAction('back')">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                    <path d="M10 12L6 8L10 4" stroke="#5D748D" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+
+                            <div class="nav-title-section">
+                                <span class="nav-title">Services Plomberie Aqua</span>
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="#03C5B8" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M9 12L11 14L15 10" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+
+                            <button class="nav-btn menu" onclick="handleNavAction('menu')">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                    <circle cx="8" cy="8" r="1" stroke="#5D748D" stroke-width="1"/>
+                                    <circle cx="8" cy="3.33" r="1" stroke="#5D748D" stroke-width="1"/>
+                                    <circle cx="8" cy="12.67" r="1" stroke="#5D748D" stroke-width="1"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </nav>
+
+                    <div class="mobile-content">
+                        <p style="font-size: 14px; color: #6274A0; text-align: center;">Navigation header only</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Version 3 Content -->
+        <div id="version-3" class="demo-content">
+            <div class="demo-section">
+                <h2>Version 3: Complete Mobile Page</h2>
+                <div class="mobile-app" style="min-height: 700px;">
+                    <nav class="mobile-nav">
+                        <div class="mobile-nav-content">
+                            <button class="nav-btn" onclick="handleNavAction('back')">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                    <path d="M10 12L6 8L10 4" stroke="#5D748D" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+
+                            <div class="nav-title-section">
+                                <span class="nav-title">Services Plomberie Aqua</span>
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="#03C5B8" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M9 12L11 14L15 10" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+
+                            <button class="nav-btn menu" onclick="handleNavAction('menu')">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                    <circle cx="8" cy="8" r="1" stroke="#5D748D" stroke-width="1"/>
+                                    <circle cx="8" cy="3.33" r="1" stroke="#5D748D" stroke-width="1"/>
+                                    <circle cx="8" cy="12.67" r="1" stroke="#5D748D" stroke-width="1"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </nav>
+
+                    <div class="mobile-content">
+                        <div class="feedback-section">
+                            <p class="question-text">Est-il votre artisan pour ce projet ?</p>
+
+                            <div class="action-buttons">
+                                <button class="btn-yes" onclick="handleFeedback('yes')">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                        <path d="M9 11L12 14L22 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M21 12V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    Oui
+                                </button>
+
+                                <button class="btn-no" onclick="handleFeedback('no')">
+                                    Non
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showVersion(version) {
+            document.querySelectorAll('.demo-content').forEach(content => {
+                content.classList.remove('active');
+            });
+
+            document.querySelectorAll('.version-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            document.getElementById('version-' + version).classList.add('active');
+            document.querySelectorAll('.version-tab')[version - 1].classList.add('active');
+        }
+
+        function handleAttachmentClick(title) {
+            alert('Clicked: ' + title);
+        }
+
+        function handleNavAction(action) {
+            alert('Navigation: ' + action);
+        }
+
+        function handleFeedback(answer) {
+            alert('Feedback: ' + answer);
+        }
+    </script>
+</body>
+</html>
